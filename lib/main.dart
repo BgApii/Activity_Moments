@@ -44,8 +44,8 @@ class ImageGalleryState extends State<ImageGallery> {
     },
     {
       'image': 'assets/images/simatif.jpg',
-      'title': 'Simatif',
-      'description': 'Senam pagi bersama teman-teman simatif',
+      'title': 'SIMATIF',
+      'description': 'Senam pagi bersama teman-teman SIMATIF',
     },
     {
       'image': 'assets/images/bakar_bakar.jpg',
@@ -74,14 +74,24 @@ class ImageGalleryState extends State<ImageGallery> {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildImageContainer(),
+            if (isPortrait)
+              SizedBox(
+                height: 60,
+              ), // Add space at the top only in portrait mode
+            Expanded(child: _buildImageContainer()),
             SizedBox(height: 20),
-            _buildDescriptionContainer(),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 120),
+              child: _buildDescriptionContainer(),
+            ),
           ],
         ),
       ),
@@ -92,7 +102,6 @@ class ImageGalleryState extends State<ImageGallery> {
   Widget _buildImageContainer() {
     return Container(
       width: 320,
-      height: 520,
       padding: const EdgeInsets.all(10.0),
       decoration: _boxDecoration(),
       child: ClipRRect(
@@ -116,7 +125,7 @@ class ImageGalleryState extends State<ImageGallery> {
   Widget _buildDescriptionContainer() {
     return Container(
       width: 320,
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       decoration: _boxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
